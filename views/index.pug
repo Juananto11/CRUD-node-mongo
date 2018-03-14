@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title Crud Node.js - MongoDB
+  body
+    h1 Lista de usuarios
+
+    form(action="/users" method="post")
+      label(for="name") Ingresa tu nombre
+      input(type="text" name="name" id="name" placeholder="Ingresa tu nombre")
+      label(for="password") Ingresa tu contraseña
+      input(type="password" name="password" id="password" placeholder="Ingresa tu contraseña")
+      label(for="email") Ingresa tu correo electrónico
+      input(type="email" name="email" id="email" placeholder="Ingresa tu correo electrónico")
+      label(for="birthday") Fecha de nacimiento
+      input(type="number" name="birthday" id="birthday" placeholder="18")
+      button(type="submit" id="submit") Enviar
+
+    each user in users
+      .users
+        p: strong= user.name
+        p= user.password
+        p= user.email
+        p= user.birthday
+
+    button(id="update") Actualizar
+    button(id="delete") Eliminar
+
+    script(src="main.js")
