@@ -28,14 +28,29 @@ app.get('/', (req, res) => {
     })
 })
 
+app.post('/user', (req, res) => {
+  db
+    .collection('user')
+    .findOne({
+      name: req.body.name
+    }, (err, result) => {
+      if (err) return console.log(err)
+      console.log(result)
+      res.send(result)
+    })
+})
+
 app.post('/users', (req, res) => {
   db
     .collection('user')
-    .save(req.body, (err, result) => {
+    .insertOne({
+      name: req.body.name,
+      password: req.body.password,
+      email: req.body.email,
+      age: req.body.age
+    }, (err, result) => {
       if (err) return console.log(err)
-
-      console.log('Base de Datos Guardada')
-      res.redirect('/')
+      res.send(result)
     })
   console.log(req.body)
 })
@@ -44,15 +59,14 @@ app.put('/users', (req, res) => {
   db
     .collection('user')
     .findOneAndUpdate(
-      {name: 'Juan Garcia'},
+      {name: req.body.currentName},
       {
         $set: {
           name: req.body.name,
-          email: req.body.email
+          password: req.body.password,
+          email: req.body.email,
+          age: req.body.age
         }
-      },
-      {
-        upsert: true
       },
       (err, result) => {
         if (err) return res.send(err)
